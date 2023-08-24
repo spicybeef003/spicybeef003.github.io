@@ -34,6 +34,8 @@ function initialize() {
 		startTimer()
 	}
 
+	console.log(window.location.href)
+
 	// document.getElementById("welcomeClose").onclick = function() {
 	// 	document.getElementById("welcomeModal").style.display = "none";
 	// }
