@@ -18,13 +18,10 @@ h1, h2, h3 {
 	font-family: Arial, Helvetica, sans-serif;
 }
 
-hr {
-	width: 600px;
-}
-
 div {
 	transition: all .5s ease-in-out;
 }
+
 
 #textbox {
 	width: 900px;
@@ -134,9 +131,6 @@ div {
    content: " ";
 }
 
-
-
-
 .tileHolder {
 	/* Box */
    border: 2px solid lightgray;
@@ -209,6 +203,62 @@ div {
 }
 .apply-shakeY {
     animation: shakeY 0.35s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  height: 80%;
+  width: 75%; /* Could be more or less, depending on screen size */
+
+}
+
+#startButton {
+	margin-bottom: 0 auto;
+	text-align: center;
+	display: inline-block;
+	background-color: rgba(230, 230, 250, 0.3);
+	height: 50px;
+	width: 200px;
+	color: black;
+	font-size: 24px;
+	font-weight: bold;
+	border-radius: 10px;
+
+	justify-content: center;
+  align-items: center;
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 

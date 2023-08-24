@@ -19,8 +19,25 @@ window.onload = function() {
 	initialize();
 }
 
+// window.onclick = function(event) {
+//   	if (event.target == document.getElementById("welcomeModal")) {
+//   	  document.getElementById("welcomeModal").style.display = "none";
+//   	}
+// }
+
 
 function initialize() {
+	document.getElementById("welcomeModal").style.display = "block"
+
+	document.getElementById("startButton").onclick = function(e) {
+		document.getElementById("welcomeModal").style.display = "none";
+		startTimer()
+	}
+
+	// document.getElementById("welcomeClose").onclick = function() {
+	// 	document.getElementById("welcomeModal").style.display = "none";
+	// }
+
 	pickLetters()
 
 	// update tile width based on number tiles in game
@@ -54,6 +71,21 @@ function initialize() {
 
 		tile.addEventListener("animationend", (e) => {
 			tile.classList.remove("apply-shakeY")
+		})
+		tile.addEventListener("click", (e) => {
+			currTile = e.target.id
+				
+			// last letter of upper tileholders is the pressed key
+			if (guess.includes(letters[currTile])) {
+				if (guess.slice(-1) == letters[currTile]) {
+				returnLetter(letters[currTile]) 
+				}
+			}
+
+			// adding letters to word to be guessed
+			else if (currTile < numTiles && letters.includes(letters[currTile])) {
+				addLetter(letters[currTile])
+			}
 		})
 	}
 
@@ -123,8 +155,6 @@ function initialize() {
 	})
 
 	disableEnterButton()
-
-	startTimer()
 }
 
 function pickLetters() {
@@ -197,8 +227,8 @@ function addLetter(letter) {
 function checkGuess(guess) {
 	if (acceptedWords.includes(guess)) {
 		if (correctlyGuessedWords.indexOf(guess) > -1) {
-			console.log(guess)
-			console.log(correctlyGuessedWords)
+			// console.log(guess)
+			// console.log(correctlyGuessedWords)
 			updateStatement("alreadyGuessed")
 		}
 		else {
@@ -284,7 +314,6 @@ function shuffleLetters() {
 		tile.innerText = letters[r]
 		tile.classList.add("apply-shakeY")
 	}
-
 }
 
 

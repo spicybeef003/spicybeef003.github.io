@@ -17,17 +17,21 @@
     <body>
         <div id="textbox">
             <p id="blank"></p>
+            <!-- <p id="generalIcon"><img src="general.jpeg" height="100px"/></p> -->
             <h1 id="title">Spank me silly</h1>
-            <button id="share" type="button">Share</button>
+            <div id="buttonRack">
+                <button id="share" type="button">Share</button>
+                <button id="settings" type="button">Settings</button>
+            </div>
+            
         </div>
 
-
-        <hr>
+        <hr style="width: 600px">
         <br>
 
         <div id="top" style="display: flex; justify-content: space-around">
             <button id="shuffle" type="button"><img src="shuffle.png" width="40" height="40"/></button>
-            <div id="timer" >1:00</div>
+            <div id="timer" >01:00</div>
         </div>
 
         <br>
@@ -51,9 +55,26 @@
         <div id="bottomTileHolders">
             <div id="letters"></div>
         </div>
-
-        
         
         <h1 id="statement"></h1>
+
+        <!-- Welcome modal -->
+        <div id="welcomeModal" class="modal">
+
+            <!-- Welcome Modal content -->
+            <div class="modal-content">
+                <!-- <span id="welcomeClose" class="close">&times;</span> -->
+                <h1 style="text-align: left">How To Play</h1>
+                <hr>
+                <h3 style="text-align: left">1. Make as many words as possible in 60 seconds.</h3>
+                <h3 style="text-align: left">2. Words must contain at least 3 letters.</h3>
+                <h3 style="text-align: left">3. Using more letters for a word awards more points.</h3>
+                <h3 style="text-align: left">4. You can type or click the letters.</h3>
+                <hr>
+                <p id="general"><img src="general.jpeg" height="300"/></p>
+                <button id="startButton" type="button")>START GAME</button>
+            </div>
+
+        </div>
     </body>
 </html>
