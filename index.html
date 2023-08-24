@@ -11,14 +11,48 @@
 
         <link rel="stylesheet" href="spank.css">
         <script src="spank.js"></script>
+        <script type="abbrv_en.txt"></script>
     </head>
 
     <body>
-        <h1 id="title">Spank me silly</h1>
+        <div id="textbox">
+            <p id="blank"></p>
+            <h1 id="title">Spank me silly</h1>
+            <button id="share" type="button">Share</button>
+        </div>
+
+
         <hr>
         <br>
-        <div id="board">
+
+        <div id="top" style="display: flex; justify-content: space-around">
+            <button id="shuffle" type="button"><img src="shuffle.png" width="40" height="40"/></button>
+            <div id="timer" >1:00</div>
         </div>
+
+        <br>
+
+        <div id="scoreBox">
+            <h2 id="numWords">WORDS: 0</h2>
+            <h1 id="score">SCORE: 0000</h1>
+        </div>
+
+        <div id="spacer1">
+        </div>
+
+        <button id="enterButt" type="button")">Enter</button>
+
+        <div id="spacer1">
+        </div>
+
+        <div id="topTileHolders">
+        </div>
+        <br>
+        <div id="bottomTileHolders">
+            <div id="letters"></div>
+        </div>
+
+        
         
         <h1 id="statement"></h1>
     </body>

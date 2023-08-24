@@ -1,0 +1,214 @@
+/*
+access ID use #, access class use .
+*/
+
+:root {
+	--game-width: 400px;
+	--num-tiles: 6;
+	--tile-margin: 2.5px;
+	--tile-width: 5px;
+
+}
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	text-align: center;
+}
+
+h1, h2, h3 {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+hr {
+	width: 600px;
+}
+
+div {
+	transition: all .5s ease-in-out;
+}
+
+#textbox {
+	width: 900px;
+	height: 100px;
+	display: grid; 
+	grid-template-columns: 1fr 1fr 1fr;
+	margin: auto;
+	background-color: transparent;
+}
+
+#title {
+	font-size: 36px;
+	font-weight: bold;
+	letter-spacing: 1px;
+  text-align: center;
+}
+
+#share {
+  height: 50px;
+  margin: 0 auto;
+  justify-content: center;
+  text-align: right;
+}
+
+#top {
+	background-color: transparent;
+	width: 700px;
+	height: 100px;
+	margin: 0 auto;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+#shuffle {
+	height: 60px;
+	width: 60px;
+	border-radius: 40px;
+	display: flex;
+	justify-content: center;
+ 	align-items: center;
+}
+
+
+#timer {
+	height: 30px;
+	justify-content: center;
+   align-items: center;
+   font-size: 24px;
+   background-color: rgba(0,0,230,0.25);
+   justify-content: center;
+   align-items: center;
+   display: flex;
+   padding-left: 10px;
+   padding-right: 10px;
+   border-radius: 20px;
+}
+
+#scoreBox {
+	width: 300px;
+	height: 100px;
+	background-color: #EAF0F6;
+	margin: 0 auto;
+	padding-bottom: 20px;
+ 	border-style: solid;
+	border-color: #B6C7D6;
+	border-radius: 20px;
+	text-align: center;
+}
+
+#enterButt {
+	display: inline-block;
+	background-color: rgba(230, 230, 250, 0.3);
+	padding: 20px;
+	height: 80px;
+	width: 170px;
+	color: black;
+	text-align: center;
+	font-size: 30px;
+	font-weight: bold;
+	border-radius: 10px;
+}
+
+
+#topTileHolders, #bottomTileHolders {
+	position: relative;
+	width: var(--game-width);
+	height: var(--tile-width);
+	background-color: transparent;
+	margin: 0 auto;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+#letters {
+	position: absolute;
+	width: var(--game-width);
+	height: var(--tile-width);
+	background-color: transparent;
+	margin: 0 auto;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+#spacer1 {
+   display: block;
+   margin: 50px;
+   content: " ";
+}
+
+
+
+
+.tileHolder {
+	/* Box */
+   border: 2px solid lightgray;
+   width: var(--tile-width);
+   height: var(--tile-width);
+   margin: var(--tile-margin);
+   display: flex;
+   border-radius: 5px;
+}
+
+.tile {
+	/* Box */
+	border: 2px solid lightgray;
+	width: var(--tile-width);
+	height: var(--tile-width);
+	margin: var(--tile-margin);
+	background-color: goldenrod;
+	border-color: transparent;
+
+	/* Text */
+   color: black;
+   font-size: 36px;
+   font-weight: bold;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+
+   position: relative;
+   border-radius: 5px;
+}
+
+@keyframes shakeX {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+@keyframes shakeY {
+  10%, 90% {
+    transform: translate3d(0, -1px, 0);
+  }
+
+  20%, 80% {
+    transform: translate3d(0, 2px, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(0, -4px, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(0, 4px, 0);
+  }
+}
+
+.apply-shakeX {
+    animation: shakeX 0.52s cubic-bezier(.36,.07,.19,.97) both;
+}
+.apply-shakeY {
+    animation: shakeY 0.35s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+
