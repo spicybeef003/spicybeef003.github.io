@@ -11,17 +11,20 @@
 
         <link rel="stylesheet" href="spank.css">
         <script src="spank.js"></script>
-        <script type="abbrv_en.txt"></script>
+        <script src="html2canvas.js"></script>
     </head>
 
     <body>
+        <div class="loader-container">
+        </div>
+
         <div id="textbox">
             <p id="blank"></p>
             <!-- <p id="generalIcon"><img src="general.jpeg" height="100px"/></p> -->
             <h1 id="title">Spank me silly</h1>
             <div id="buttonRack">
-                <button id="share" type="button">Share</button>
-                <button id="settings" type="button">Settings</button>
+                <button id="shareButton" type="button"><img src="share.png" width="40" height="40"/></img></button>
+                <button id="helpButton" type="button"><img src="help.png" width="40" height="40"/></img></button>
             </div>
             
         </div>
@@ -71,10 +74,42 @@
                 <h3 style="text-align: left">3. Using more letters for a word awards more points.</h3>
                 <h3 style="text-align: left">4. You can type or click the letters.</h3>
                 <hr>
-                <p id="general"><img src="general.jpeg" height="300"/></p>
+                <img id="general"><img src="general.jpeg" height="300px"/></img>
+                <button id="startButton" type="button" disabled)>Loading...</button>
+            </div>
+        </div>
+
+        <!-- Share modal -->
+        <div id="shareModal" class="modal">
+
+            <!-- Share Modal content -->
+            <div class="modal-content">
+                <span id="shareClose" class="close">&times;</span>
+                <button id="shareResultButton" type="button")>Share your results</button>
+                <button id="challengeButton" type="button")>Challenge a friend</button>
+            </div>
+        </div>
+
+        <!-- Help modal -->
+        <div id="helpModal" class="modal">
+
+            <!-- Help Modal content -->
+            <div class="modal-content">
+                <!-- <span id="welcomeClose" class="close">&times;</span> -->
+                <h1 style="text-align: left">How To Play</h1>
+                <hr>
+                <h3 style="text-align: left">1. Make as many words as possible in 60 seconds.</h3>
+                <h3 style="text-align: left">2. Words must contain at least 3 letters.</h3>
+                <h3 style="text-align: left">3. Using more letters for a word awards more points.</h3>
+                <h3 style="text-align: left">4. You can type or click the letters.</h3>
+                <hr>
+                <!-- <img id="general"><img src="general.jpeg" height="300px"/></img> -->
                 <button id="startButton" type="button")>START GAME</button>
             </div>
-
         </div>
+
     </body>
+
+    
+
 </html>

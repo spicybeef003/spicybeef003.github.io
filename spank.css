@@ -22,6 +22,9 @@ div {
 	transition: all .5s ease-in-out;
 }
 
+#welcomeModal {
+	display: block;
+}
 
 #textbox {
 	width: 900px;
@@ -39,8 +42,7 @@ div {
   text-align: center;
 }
 
-#share {
-  height: 50px;
+#shareButton, #helpButton {
   margin: 0 auto;
   justify-content: center;
   text-align: right;
@@ -131,6 +133,17 @@ div {
    content: " ";
 }
 
+.loader-container {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+	background-color: black;
+    /* background: #000
+        url("https://media.giphy.com/media/8agqybiK5LW8qrG3vJ/giphy.gif") center
+        no-repeat; */
+    z-index: 1;
+}
+
 .tileHolder {
 	/* Box */
    border: 2px solid lightgray;
@@ -160,6 +173,29 @@ div {
 
    position: relative;
    border-radius: 5px;
+}
+
+.custom-alert-box {
+	position: absolute;
+	top: 0%;
+	left: 35%;
+	width: 30%;
+	z-index: 4; 
+	padding: 20px;
+	font-size: 20px;
+	color: #ffffff;
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: #58a6eb;
+	animation: alert-box 1s ease;
+  }
+
+@keyframes alert-box {
+	0% {
+		top: -10%;
+	}
+	100% {
+		top: 0%;
+	}
 }
 
 @keyframes shakeX {
@@ -209,7 +245,7 @@ div {
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  z-index: 2; /* Sit on top */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
@@ -231,7 +267,6 @@ div {
 }
 
 #startButton {
-	margin-bottom: 0 auto;
 	text-align: center;
 	display: inline-block;
 	background-color: rgba(230, 230, 250, 0.3);
@@ -243,7 +278,7 @@ div {
 	border-radius: 10px;
 
 	justify-content: center;
-  align-items: center;
+  	align-items: center;
 }
 
 /* The Close Button */
