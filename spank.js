@@ -37,8 +37,8 @@ window.onclick = function(event) {
 
 
 function initialize() {
-
 	loadWelcome()
+	checkScreenSize()
 	loadTopButtons()
 	pickLetters()
 	setupTiles()
@@ -73,6 +73,10 @@ function loadWelcome() {
 	}
 }
 
+function checkScreenSize() {
+
+}
+
 function loadTopButtons() {
 
 	// share button
@@ -86,7 +90,14 @@ function loadTopButtons() {
 
 	document.getElementById("shareResultButton").addEventListener("click", async () => {
 		if (navigator.share) {
-			html2canvas(document.querySelector("#scoreBox")).then(canvas => canvas.toBlob(blob => navigator.share({'image/png': blob, 'text/plain': "www.google.com"})));
+			try {
+				html2canvas(document.querySelector("#scoreBox")).then(canvas => canvas.toBlob(blob => navigator.share({
+					png: blob,
+					url: "www.google.com"})));
+			} catch (err) {
+				customAlert(`Error: ${err}`);
+				console.log(err);
+			}
 		} else {
 			html2canvas(document.querySelector("#scoreBox")).then(canvas => canvas.toBlob(blob => navigator.clipboard.write([new ClipboardItem({'image/png': blob})])));
 			customAlert("Score copied to clipboard");
@@ -99,7 +110,13 @@ function loadTopButtons() {
 		const newUrl = new URL(baseURL + letterIntArray + "&gameID=" + gameID)
 
 		if (navigator.share && navigator.canShare(shareData)) {
-			navigator.share({url: newUrl});
+			try {
+				await navigator.share({url: newUrl});
+				//resultPara.textContent = "MDN shared successfully";
+			} catch (err) {
+				//resultPara.textContent = `Error: ${err}`;
+				console.log(err);
+			}
 		} else {
 			navigator.clipboard.writeText(newUrl);
 			customAlert("Copied");
@@ -133,7 +150,7 @@ function pickLetters() {
 		let priorLetters = (intArray.map((int) => {return String.fromCharCode(int)})).join('')
 		originalLetters = priorLetters
 		letters = priorLetters
-		console.log(thisURL.searchParams.get('gameID'))
+
 		gameID = thisURL.searchParams.get('gameID')
 	}
 	else {
