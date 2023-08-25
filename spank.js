@@ -2,9 +2,11 @@ var numTiles = 6; // number tiles in game
 var currTile = 0; // current letter
 
 var gameOver = false;
+var showHelp = false;
 var originalLetters = ""
 var letters = "" // if want two of same letter need to improve logic for when typing guesses
 var guess = "" // word to be guessed
+var gameID = ""
 
 var statement = document.querySelector("h1#statement")
 
@@ -22,9 +24,9 @@ window.onload = function() {
 }
 
 window.onclick = function(event) {
-  	// if (event.target == document.getElementById("welcomeModal")) {
-  	// 	document.getElementById("welcomeModal").style.display = "none";
-  	// }
+  	if (event.target == document.getElementById("welcomeModal") && showHelp) {
+  		document.getElementById("welcomeModal").style.display = "none";
+  	}
 
 	if (event.target == document.getElementById("shareModal")) {
   		document.getElementById("shareModal").style.display = "none";
@@ -33,6 +35,7 @@ window.onclick = function(event) {
 
 
 function initialize() {
+
 	loadWelcome()
 	loadTopButtons()
 	pickLetters()
@@ -97,7 +100,7 @@ function loadTopButtons() {
 
 	document.getElementById("challengeButton").addEventListener("click", async () => {
 		let letterIntArray = originalLetters.split('').map((char) => { return char.charCodeAt(0) })
-		const newUrl = new URL(baseURL + letterIntArray)
+		const newUrl = new URL(baseURL + letterIntArray + "&gameID=" + gameID)
 
 		if (navigator.share && navigator.canShare(shareData)) {
 			try {
@@ -115,6 +118,20 @@ function loadTopButtons() {
 	})
 
 	// help button
+	document.getElementById("helpButton").addEventListener("click", async () => {
+		showHelp = true
+		document.getElementById("welcomeClose").style.display = "inline";
+		document.getElementById("welcomeModal").style.display = "block";
+		document.getElementById("startButton").innerText = "OK";
+		document.getElementById("startButton").onclick = function(e) {
+			document.getElementById("welcomeModal").style.display = "none";
+		}
+	})
+
+	document.getElementById("welcomeClose").addEventListener("click", async () => {
+		document.getElementById("welcomeModal").style.display = "none";
+	})
+	
 }
 
 
@@ -126,6 +143,8 @@ function pickLetters() {
 		let priorLetters = (intArray.map((int) => {return String.fromCharCode(int)})).join('')
 		originalLetters = priorLetters
 		letters = priorLetters
+
+		gameID = thisURL.searchParams.get('gameID')
 	}
 	else {
 		var acceptable = false
@@ -149,10 +168,13 @@ function pickLetters() {
 				else {
 					result = ''
 				}
+				gameID = (+new Date * Math.random()).toString(36).substring(0,6).toUpperCase()
 			}
 		}
 		originalLetters = result
 		letters = result
+
+		document.getElementById("gameID").innerText = "GameID: " + gameID
 	}
 }
 

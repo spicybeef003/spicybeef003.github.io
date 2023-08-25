@@ -67,7 +67,7 @@
 
             <!-- Welcome Modal content -->
             <div class="modal-content">
-                <!-- <span id="welcomeClose" class="close">&times;</span> -->
+                <span id="welcomeClose" class="close">&times;</span>
                 <h1 style="text-align: left">How To Play</h1>
                 <hr>
                 <h3 style="text-align: left">1. Make as many words as possible in 60 seconds.</h3>
@@ -76,8 +76,12 @@
                 <h3 style="text-align: left">4. You can type or click the letters.</h3>
                 <h3 style="text-align: left">5. (PC only) Press tab to shuffle the letters.</h3>
                 <hr>
-                <img id="general"><img src="general.jpeg" height="300px"/></img>
-                <button id="startButton" type="button" disabled)>Loading...</button>
+                <br>
+                <div id="welcomeBottom">
+                    <img id="general" src="general.jpeg" style="width: 200px; height: auto"/></img>
+                    <br>
+                    <button id="startButton" type="button" disabled)>Loading...</button>
+                </div>
             </div>
         </div>
 
@@ -89,25 +93,11 @@
                 <span id="shareClose" class="close">&times;</span>
                 <button id="shareResultButton" type="button")>Share your results</button>
                 <button id="challengeButton" type="button")>Challenge a friend</button>
+                <div id="wordCombos"></div>
+                <div id="definitions"></div>
             </div>
         </div>
 
-        <!-- Help modal -->
-        <div id="helpModal" class="modal">
-
-            <!-- Help Modal content -->
-            <div class="modal-content">
-                <!-- <span id="welcomeClose" class="close">&times;</span> -->
-                <h1 style="text-align: left">How To Play</h1>
-                <hr>
-                <h3 style="text-align: left">1. Make as many words as possible in 60 seconds.</h3>
-                <h3 style="text-align: left">2. Words must contain at least 3 letters.</h3>
-                
-                <hr>
-                <!-- <img id="general"><img src="general.jpeg" height="300px"/></img> -->
-                <button id="startButton" type="button")>START GAME</button>
-            </div>
-        </div>
 
     </body>
 
