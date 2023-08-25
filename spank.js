@@ -18,6 +18,8 @@ var gameOver = false
 
 var baseURL = "https://spicybeef003.github.io/?starter="
 
+
+
 window.onload = function() {
 	document.getElementsByClassName("loader-container")[0].style.display = "none"
 	initialize();
@@ -79,8 +81,7 @@ function loadTopButtons() {
 	}
 
 	document.getElementById("shareButton").onclick = function() {
-		document.getElementById("shareModal").style.display = "block"
-		
+		showShareModal()
 	}
 
 	document.getElementById("shareResultButton").addEventListener("click", async () => {
@@ -179,12 +180,6 @@ function pickLetters() {
 }
 
 function setupTiles() {
-	// update tile width based on number tiles in game
-	// gameWidth = window.screen.width < window.screen.height ? window.screen.width : window.screen.height
-	// console.log(gameWidth)
-	// tileWidth = (gameWidth - (numTiles*4-2)*tileMargin/100*gameWidth)/numTiles
-	//document.documentElement.style.setProperty("--tile-width", String(tileWidth).concat('', "px"));
-
 	// create top row of tile holders
 	for (let r = 0; r < numTiles; r++) {
 		let tileHolder = document.createElement("span") // span is similar to paragraph but doesn't end with new line
@@ -453,9 +448,26 @@ function startTimer() {
 	    	clearTimeout(timer)
 	    	document.getElementById("timer").style.color = "red"
 	    	gameOver = true
-
-	    	document.getElementById("shareModal").style.display = "block"
+	    	showShareModal()
 	    }
+	}
+}
+
+function showShareModal() {
+	document.getElementById("shareModal").style.display = "block"
+
+	if (gameOver) {
+		let sortedAcceptedWords = acceptedWords.sort(function(a, b) {
+			  return a.length - b.length || a.localeCompare(b);
+			})
+		for (i = 0; i < sortedAcceptedWords.length; i++) {
+			let word = sortedAcceptedWords[i];
+			let h5 = document.createElement("h5");
+			h5.innerText = word;
+			h5.id = word;
+			document.getElementById("wordCombos").appendChild(h5)
+		}
+
 	}
 }
 
