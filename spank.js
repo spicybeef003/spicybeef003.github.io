@@ -1,8 +1,5 @@
 var numTiles = 6; // number tiles in game
 var currTile = 0; // current letter
-var gameWidth = 400;
-var tileMargin = 2.5;
-var tileWidth = 50;
 
 var gameOver = false;
 var originalLetters = ""
@@ -20,6 +17,7 @@ var gameOver = false
 var baseURL = "https://spicybeef003.github.io/?starter="
 
 window.onload = function() {
+	document.getElementsByClassName("loader-container")[0].style.display = "none"
 	initialize();
 }
 
@@ -39,6 +37,7 @@ function initialize() {
 	loadTopButtons()
 	pickLetters()
 	setupTiles()
+	setupKeyPresses()
 	disableEnterButton()
 
 	console.log(window.location.href)
@@ -82,7 +81,7 @@ function loadTopButtons() {
 	}
 
 	document.getElementById("shareResultButton").addEventListener("click", async () => {
-		if (navigator.share && navigator.canShare(shareData)) {
+		if (navigator.share) {
 			try {
 				await html2canvas(document.querySelector("#scoreBox")).then(canvas => canvas.toBlob(blob => navigator.share({'image/png': blob, 'text/plain': "www.google.com"})));
 			} catch (err) {
@@ -120,15 +119,11 @@ function loadTopButtons() {
 
 
 function pickLetters() {
-	console.log(window.location.href)
 	let thisURL = new URL(window.location.href)
-	console.log(thisURL)
 	var intArray = thisURL.searchParams.get('starter')
 	if (intArray != null) {
 		intArray = intArray.split(',')
-		console.log(intArray)
 		let priorLetters = (intArray.map((int) => {return String.fromCharCode(int)})).join('')
-		console.log(priorLetters)
 		originalLetters = priorLetters
 		letters = priorLetters
 	}
@@ -163,8 +158,10 @@ function pickLetters() {
 
 function setupTiles() {
 	// update tile width based on number tiles in game
-	tileWidth = (gameWidth - (numTiles*4-2)*tileMargin)/numTiles
-	document.documentElement.style.setProperty("--tile-width", String(tileWidth).concat('', "px"));
+	// gameWidth = window.screen.width < window.screen.height ? window.screen.width : window.screen.height
+	// console.log(gameWidth)
+	// tileWidth = (gameWidth - (numTiles*4-2)*tileMargin/100*gameWidth)/numTiles
+	//document.documentElement.style.setProperty("--tile-width", String(tileWidth).concat('', "px"));
 
 	// create top row of tile holders
 	for (let r = 0; r < numTiles; r++) {
@@ -211,7 +208,10 @@ function setupTiles() {
 		})
 	}
 
-	// listen for key presses
+}
+
+function setupKeyPresses() {
+// listen for key presses
 	document.addEventListener("keyup", (e) => {
 		if ("KeyA" <= e.code && e.code <= "KeyZ") {
 			if (letters.includes(e.code[3])) {
@@ -250,6 +250,10 @@ function setupTiles() {
 			}
 		}
 
+		else if (e.code == "Tab") {
+			shuffleLetters()
+		}
+
 	})
 
 	// setup enter button
@@ -286,6 +290,8 @@ function returnLetter() {
 function addLetter(letter) {
 	currTileBbox = document.getElementById(currTile.toString()).getBoundingClientRect();
 	destTileBbox = document.getElementById(guess.length.toString() + "top").getBoundingClientRect();
+
+	console.log(destTileBbox)
 
 	const tile = document.getElementById(currTile.toString())
 
@@ -392,6 +398,8 @@ function shuffleLetters() {
 		let tile = document.getElementById(r.toString())
 		tile.innerText = letters[r]
 		tile.classList.add("apply-shakeY")
+		currTile = r
+		returnLetter()
 	}
 }
 
