@@ -86,12 +86,7 @@ function loadTopButtons() {
 
 	document.getElementById("shareResultButton").addEventListener("click", async () => {
 		if (navigator.share) {
-			try {
-				await html2canvas(document.querySelector("#scoreBox")).then(canvas => canvas.toBlob(blob => navigator.share({'image/png': blob, 'text/plain': "www.google.com"})));
-			} catch (err) {
-				customAlert(`Error: ${err}`);
-				console.log(err);
-			}
+			html2canvas(document.querySelector("#scoreBox")).then(canvas => canvas.toBlob(blob => navigator.share({'image/png': blob, 'text/plain': "www.google.com"})));
 		} else {
 			html2canvas(document.querySelector("#scoreBox")).then(canvas => canvas.toBlob(blob => navigator.clipboard.write([new ClipboardItem({'image/png': blob})])));
 			customAlert("Score copied to clipboard");
@@ -104,13 +99,7 @@ function loadTopButtons() {
 		const newUrl = new URL(baseURL + letterIntArray + "&gameID=" + gameID)
 
 		if (navigator.share && navigator.canShare(shareData)) {
-			try {
-				await navigator.share({url: newUrl});
-				//resultPara.textContent = "MDN shared successfully";
-			} catch (err) {
-				//resultPara.textContent = `Error: ${err}`;
-				console.log(err);
-			}
+			navigator.share({url: newUrl});
 		} else {
 			navigator.clipboard.writeText(newUrl);
 			customAlert("Copied");
@@ -144,7 +133,7 @@ function pickLetters() {
 		let priorLetters = (intArray.map((int) => {return String.fromCharCode(int)})).join('')
 		originalLetters = priorLetters
 		letters = priorLetters
-
+		console.log(thisURL.searchParams.get('gameID'))
 		gameID = thisURL.searchParams.get('gameID')
 	}
 	else {
