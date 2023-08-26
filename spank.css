@@ -44,11 +44,17 @@ div {
 	background-color: transparent;
 }
 
+/*@media screen and (min-width : 700px) {
+#title {
+	font-size: 4px;
+}
+*/
+
 #title {
 	font-size: 36px;
 	font-weight: bold;
 	letter-spacing: 1px;
-  	text-align: center;
+  text-align: center;
 	/* overflow: hidden;
 	white-space: nowrap; */
 }
@@ -130,10 +136,8 @@ div {
 	align-items: center;
 	display: flex;
 	flex-direction: column;
-	height: 50%;
-	min-height: 200px;
-	max-height: 500px;
-	min-width: 500px;
+	height: 20%;
+	justify-content: flex-start;
 }
 
 #topTileHolders, #bottomTileHolders {
@@ -357,12 +361,13 @@ div {
   align-items: center;
 	display: flex;
 	flex-direction: row;
-	overflow: auto; 
 }
 
 #wordCombos {
+	/*display: "none";*/
 	width: 40%;
 	height: 100%;
+	/*overflow-y: "scroll";*/
 }
 
 #definitions {

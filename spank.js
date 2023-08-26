@@ -78,21 +78,21 @@ function checkScreenSize() {
 	console.log(window.innerHeight)
 	if (window.innerHeight > window.innerWidth) {
 		if (window.innerWidth < 500) {
-			document.getElementsByClassName("widthControl")[0].style.minWidth = window.innerWidth+"px"
-			document.getElementById("topTileHolders").style.minWidth = window.innerWidth+"px"
-			document.getElementById("bottomTileHolders").style.minWidth = window.innerWidth+"px"
-			document.getElementById("letters").style.minWidth = window.innerWidth+"px"
-			let tileWidth = (window.innerWidth-4*6)/7 // need to account for border
-			let tileMargin = (window.innerWidth-4*6)/7/12
+			document.getElementsByClassName("widthControl")[0].style.minWidth = window.innerWidth*0.95+"px"
+			document.getElementById("topTileHolders").style.minWidth = window.innerWidth*0.9+"px"
+			document.getElementById("bottomTileHolders").style.minWidth = window.innerWidth*0.9+"px"
+			document.getElementById("letters").style.minWidth = window.innerWidth*0.9+"px"
+			let tileWidth = (window.innerWidth*0.9-4*6)/7 // need to account for border
+			let tileMargin = (window.innerWidth*0.9-4*6)/7/12
 			document.querySelector(':root').style.setProperty("--tile-width", tileWidth + "px");
 			document.querySelector(':root').style.setProperty("--tile-margin", tileMargin + "px");
 		} 
 
 		if (window.innerHeight < 600) {
-			document.getElementsByClassName("widthControl")[0].style.minHeight = window.innerHeight+"px"
-			document.getElementById("topTileHolders").style.minHeight = window.innerHeight+"px"
-			document.getElementById("bottomTileHolders").style.minHeight = window.innerHeight+"px"
-			document.getElementById("letters").style.minHeight = window.innerHeight+"px"
+			document.getElementsByClassName("widthControl")[0].style.maxHeight = window.innerHeight+"px"
+			document.getElementById("topTileHolders").style.maxHeight = window.innerHeight+"px"
+			document.getElementById("bottomTileHolders").style.maxHeight = window.innerHeight+"px"
+			document.getElementById("letters").style.maxHeight = window.innerHeight+"px"
 		} 
 	}
 
@@ -114,6 +114,11 @@ function checkScreenSize() {
 		let tileMargin = (window.innerWidth-4*6)/84 < 2.5 ? (window.innerWidth-4*6)/84 : 2.5
 		document.querySelector(':root').style.setProperty("--tile-margin", tileMargin + "px");
 	}
+
+	if (window.innerHeight < 900) {
+		document.getElementById("general").style.height = "100px"
+		document.getElementById("general").style.width = "75px"
+	}
 }
 
 function loadTopButtons() {
@@ -131,14 +136,16 @@ function loadTopButtons() {
 		if (navigator.share) {
 			try {
 				html2canvas(document.querySelector("#scoreBox")).then(canvas => canvas.toBlob(blob => navigator.share({
-					png: blob
+					"image/png": blob
 				})));
 			} catch (err) {
 				customAlert(`Error: ${err}`);
 				console.log(err);
 			}
 		} else {
-			html2canvas(document.querySelector("#scoreBox")).then(canvas => canvas.toBlob(blob => navigator.clipboard.write([new ClipboardItem({'image/png': blob})])));
+			html2canvas(document.querySelector("#scoreBox")).then(canvas => canvas.toBlob(blob => navigator.clipboard.write([new ClipboardItem({
+				'image/png': blob
+			})])));
 			customAlert("Score copied to clipboard");
 		}
 		
@@ -510,7 +517,7 @@ function showShareModal() {
 			h5.id = word;
 			document.getElementById("wordCombos").appendChild(h5)
 		}
-
+		document.getElementById("wordCombos").style.overflowY = "scroll"
 	}
 }
 
