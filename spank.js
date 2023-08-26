@@ -74,18 +74,44 @@ function loadWelcome() {
 }
 
 function checkScreenSize() {
-	console.log(window.innerWidth)
-	console.log(window.innerHeight)
-	if (window.innerWidth < 500) {
+	// console.log(window.innerWidth)
+	// console.log(window.innerHeight)
+	if (window.innerHeight > window.innerWidth) {
+		if (window.innerWidth < 500) {
+			document.getElementsByClassName("widthControl")[0].style.minWidth = window.innerWidth+"px"
+			document.getElementById("topTileHolders").style.minWidth = window.innerWidth+"px"
+			document.getElementById("bottomTileHolders").style.minWidth = window.innerWidth+"px"
+			document.getElementById("letters").style.minWidth = window.innerWidth+"px"
+			let tileWidth = (window.innerWidth-4*6)/7 // need to account for border
+			let tileMargin = (window.innerWidth-4*6)/7/12
+			document.querySelector(':root').style.setProperty("--tile-width", tileWidth + "px");
+			document.querySelector(':root').style.setProperty("--tile-margin", tileMargin + "px");
+		} 
+
+		if (window.innerHeight < 600) {
+			document.getElementsByClassName("widthControl")[0].style.minHeight = window.innerHeight+"px"
+			document.getElementById("topTileHolders").style.minHeight = window.innerHeight+"px"
+			document.getElementById("bottomTileHolders").style.minHeight = window.innerHeight+"px"
+			document.getElementById("letters").style.minHeight = window.innerHeight+"px"
+		} 
+	}
+
+	if (window.innerWidth > window.innerHeight) {
 		document.getElementsByClassName("widthControl")[0].style.minWidth = window.innerWidth+"px"
 		document.getElementById("topTileHolders").style.minWidth = window.innerWidth+"px"
 		document.getElementById("bottomTileHolders").style.minWidth = window.innerWidth+"px"
-		document.getElementById("letters").style.minWidth = window.innerWidth+"px"
-		let tileWidth = (window.innerWidth-4*6)/7 // need to account for border
-		let tileMargin = (window.innerWidth-4*6)/7/12
+		document.getElementById("letters").style.minWidth = window.innerWidth+"px"		
+
+		document.getElementsByClassName("widthControl")[0].style.maxHeight = window.innerHeight+"px"
+		document.getElementById("topTileHolders").style.maxHeight = window.innerHeight+"px"
+		document.getElementById("bottomTileHolders").style.maxHeight = window.innerHeight+"px"
+		document.getElementById("letters").style.maxHeight = window.innerHeight+"px"
+
+		let tileWidth = document.getElementById("topTileHolders").getBoundingClientRect().height
 		document.querySelector(':root').style.setProperty("--tile-width", tileWidth + "px");
+		let tileMargin = (window.innerWidth-4*6)/84 > 2.5 ? (window.innerWidth-4*6)/84 : 2.5
 		document.querySelector(':root').style.setProperty("--tile-margin", tileMargin + "px");
-	} 
+	}
 }
 
 function loadTopButtons() {
@@ -156,6 +182,7 @@ function loadTopButtons() {
 function pickLetters() {
 	let thisURL = new URL(window.location.href)
 	var intArray = thisURL.searchParams.get('starter')
+	console.log(thisURL)
 	if (intArray != null) {
 		intArray = intArray.split(',')
 		let priorLetters = (intArray.map((int) => {return String.fromCharCode(int)})).join('')
@@ -163,6 +190,7 @@ function pickLetters() {
 		letters = priorLetters
 
 		gameID = thisURL.searchParams.get('gameID')
+		console.log(gameID)
 	}
 	else {
 		var acceptable = false
