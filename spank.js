@@ -38,7 +38,7 @@ window.onclick = function(event) {
 
 function initialize() {
 	loadWelcome()
-	checkScreenSize()
+	checkScreenSize();
 	loadTopButtons()
 	pickLetters()
 	setupTiles()
@@ -74,7 +74,18 @@ function loadWelcome() {
 }
 
 function checkScreenSize() {
-
+	console.log(window.innerWidth)
+	console.log(window.innerHeight)
+	if (window.innerWidth < 500) {
+		document.getElementsByClassName("widthControl")[0].style.minWidth = window.innerWidth+"px"
+		document.getElementById("topTileHolders").style.minWidth = window.innerWidth+"px"
+		document.getElementById("bottomTileHolders").style.minWidth = window.innerWidth+"px"
+		document.getElementById("letters").style.minWidth = window.innerWidth+"px"
+		let tileWidth = (window.innerWidth-4*6)/7 // need to account for border
+		let tileMargin = (window.innerWidth-4*6)/7/12
+		document.querySelector(':root').style.setProperty("--tile-width", tileWidth + "px");
+		document.querySelector(':root').style.setProperty("--tile-margin", tileMargin + "px");
+	} 
 }
 
 function loadTopButtons() {
