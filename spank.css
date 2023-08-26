@@ -75,7 +75,7 @@ div {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
-  	text-align: center;
+  text-align: center;
 }
 
 #shuffle {
@@ -138,12 +138,12 @@ div {
 	display: flex;
 	flex-direction: column;
 	height: 20%;
-	justify-content: flex-start;
+	max-height: 200px;
+	justify-content: space-between;
 }
 
 #topTileHolders, #bottomTileHolders {
 	position: relative;
-	width: 60%;
 	height: 8%;
 	min-height: 30px;
 	min-width: 500px;
