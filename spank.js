@@ -133,11 +133,13 @@ function loadTopButtons() {
 	}
 
 	document.getElementById("shareResultButton").addEventListener("click", async () => {
+
 		if (navigator.share) {
 			try {
-				html2canvas(document.querySelector("#scoreBox")).then(canvas => canvas.toBlob(blob => navigator.share({
-					"image/png": blob
-				})));
+				html2canvas(document.querySelector("#scoreBox")).then(canvas => canvas.toBlob(blob => {
+					const filesArray = [new File([blob], 'image.png', { type: "image/png", lastModified: new Date().getTime() })];
+					navigator.share(filesArray);
+				}))
 			} catch (err) {
 				customAlert(`Error: ${err}`);
 				console.log(err);
@@ -193,6 +195,10 @@ function pickLetters() {
 		let priorLetters = (intArray.map((int) => {return String.fromCharCode(int)})).join('')
 		originalLetters = priorLetters
 		letters = priorLetters
+		originalLetters = priorLetters
+
+		let permuts = tree(letters.split('')).map(function(str) { return str.join('') })
+		acceptedWords = permuts.filter(value => wordList.includes(value));
 
 		gameID = thisURL.searchParams.get('gameID')
 		console.log(gameID)
@@ -220,13 +226,12 @@ function pickLetters() {
 					result = ''
 				}
 				gameID = (+new Date * Math.random()).toString(36).substring(0,6).toUpperCase()
+				letters = result
+				originalLetters = result
 			}
 		}
-		originalLetters = result
-		letters = result
-
-		document.getElementById("gameID").innerText = "GameID: " + gameID
 	}
+	document.getElementById("gameID").innerText = "GameID: " + gameID
 }
 
 function setupTiles() {
