@@ -74,8 +74,8 @@ function loadWelcome() {
 }
 
 function checkScreenSize() {
-	// console.log(window.innerWidth)
-	// console.log(window.innerHeight)
+	console.log(window.innerWidth)
+	console.log(window.innerHeight)
 	if (window.innerHeight > window.innerWidth) {
 		if (window.innerWidth < 500) {
 			document.getElementsByClassName("widthControl")[0].style.minWidth = window.innerWidth+"px"
@@ -97,10 +97,12 @@ function checkScreenSize() {
 	}
 
 	if (window.innerWidth > window.innerHeight) {
-		document.getElementsByClassName("widthControl")[0].style.minWidth = window.innerWidth+"px"
-		document.getElementById("topTileHolders").style.minWidth = window.innerWidth+"px"
-		document.getElementById("bottomTileHolders").style.minWidth = window.innerWidth+"px"
-		document.getElementById("letters").style.minWidth = window.innerWidth+"px"		
+		if (window.innerWidth < 500) {
+			document.getElementsByClassName("widthControl")[0].style.minWidth = window.innerWidth+"px"
+			document.getElementById("topTileHolders").style.minWidth = window.innerWidth+"px"
+			document.getElementById("bottomTileHolders").style.minWidth = window.innerWidth+"px"
+			document.getElementById("letters").style.minWidth = window.innerWidth+"px"		
+		}
 
 		document.getElementsByClassName("widthControl")[0].style.maxHeight = window.innerHeight+"px"
 		document.getElementById("topTileHolders").style.maxHeight = window.innerHeight+"px"
@@ -109,7 +111,7 @@ function checkScreenSize() {
 
 		let tileWidth = document.getElementById("topTileHolders").getBoundingClientRect().height
 		document.querySelector(':root').style.setProperty("--tile-width", tileWidth + "px");
-		let tileMargin = (window.innerWidth-4*6)/84 > 2.5 ? (window.innerWidth-4*6)/84 : 2.5
+		let tileMargin = (window.innerWidth-4*6)/84 < 2.5 ? (window.innerWidth-4*6)/84 : 2.5
 		document.querySelector(':root').style.setProperty("--tile-margin", tileMargin + "px");
 	}
 }
@@ -129,8 +131,8 @@ function loadTopButtons() {
 		if (navigator.share) {
 			try {
 				html2canvas(document.querySelector("#scoreBox")).then(canvas => canvas.toBlob(blob => navigator.share({
-					png: blob,
-					url: "www.google.com"})));
+					png: blob
+				})));
 			} catch (err) {
 				customAlert(`Error: ${err}`);
 				console.log(err);
@@ -146,14 +148,10 @@ function loadTopButtons() {
 		let letterIntArray = originalLetters.split('').map((char) => { return char.charCodeAt(0) })
 		const newUrl = new URL(baseURL + letterIntArray + "&gameID=" + gameID)
 
-		if (navigator.share && navigator.canShare(shareData)) {
-			try {
-				await navigator.share({url: newUrl});
-				//resultPara.textContent = "MDN shared successfully";
-			} catch (err) {
-				//resultPara.textContent = `Error: ${err}`;
-				console.log(err);
-			}
+		if (navigator.share) {
+			navigator.share({
+				url: newUrl
+			});
 		} else {
 			navigator.clipboard.writeText(newUrl);
 			customAlert("Copied");

@@ -130,6 +130,10 @@ div {
 	align-items: center;
 	display: flex;
 	flex-direction: column;
+	height: 50%;
+	min-height: 200px;
+	max-height: 500px;
+	min-width: 500px;
 }
 
 #topTileHolders, #bottomTileHolders {
@@ -156,7 +160,7 @@ div {
 
 #spacer1 {
    display: block;
-   margin: 50px;
+   margin: 25px;
    content: " ";
 }
 
