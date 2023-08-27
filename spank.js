@@ -56,7 +56,7 @@ function initialize() {
 		statement.classList.remove("apply-shakeX")
 		setTimeout(() => {
 			statement.innerText = "";
-		}, 1000)
+		}, 2500)
 	})
 
 	// shuffle button
@@ -488,6 +488,7 @@ function checkGuess(guess) {
 
 function updateStatement(expr) {
 	statement = document.querySelector("h1#statement")
+	statement.classList.remove("apply-shakeX")
 	switch (expr) {
 		case "short":
 			statement.innerText = "Not enough letters!";
