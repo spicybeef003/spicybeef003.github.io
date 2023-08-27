@@ -73,6 +73,7 @@ function loadWelcome() {
 	document.getElementById("startButton").innerText = "Click to start"
 	document.getElementById("startButton").onclick = function(e) {
 		document.getElementById("welcomeModal").style.display = "none";
+		setupTiles()
 		startTimer()
 	}
 }
@@ -280,7 +281,6 @@ function getDefinitions() {
 		dictWords = data.map(function(n) { return n["word"] });
 		loadWelcome()
 		pickLetters()
-		setupTiles()
 	})
 }
 
@@ -314,13 +314,31 @@ function setupTiles() {
 		tile.addEventListener("animationend", (e) => {
 			tile.classList.remove("apply-shakeY")
 		})
+
 		tile.addEventListener("click", (e) => {
 			currTile = e.target.id
 				
-			// last letter of upper tileholders is the pressed key
 			if (guess.includes(letters[currTile])) {
 				if (guess.slice(-1) == letters[currTile]) {
-				returnLetter(letters[currTile]) 
+					returnLetter() 
+				}
+				// return letter and shift remaining
+				else {
+					let idx = guess.indexOf(letters[e.target.id])
+					var toAddBack = ""
+					for (i = guess.length-1; i >= idx; i--) {
+						let letter = guess[i]
+						currTile = letters.indexOf(letter);
+						returnLetter()
+						if (i > idx) {
+							toAddBack = letter + toAddBack
+						}
+					}
+					for (j = 0; j < toAddBack.length; j++) {
+						let letter = toAddBack[j]
+						currTile = letters.indexOf(letter);
+						addLetter(letter)
+					}
 				}
 			}
 
@@ -340,10 +358,10 @@ function setupKeyPresses() {
 			if (letters.includes(e.code[3])) {
 				currTile = letters.indexOf(e.code[3])
 				
-				// last letter of upper tileholders is the pressed key
 				if (guess.includes(e.code[3])) {
+					// last letter of upper tileholders is the pressed key
 					if (guess.slice(-1) == e.code[3]) {
-					returnLetter(e.code[3]) 
+						returnLetter(e.code[3]) 
 					}
 				}
 
@@ -405,7 +423,16 @@ function returnLetter() {
 	tile.style.top = (Number(topValue) + yDist) + "px";
 	tile.style.left = (Number(leftValue) + xDist) + "px";
 
-	guess = guess.slice(0, -1)
+	let idx = guess.indexOf(letters[currTile])
+	if (idx == 0) {
+		guess = guess.slice(1, guess.length);
+	}
+	else if (idx == guess.length - 1) {
+		guess = guess.slice(0, -1)
+	}
+	else {
+		guess = guess.slice(0, idx) + guess.slice(idx+1, guess.length) 
+	}
 
 	guess.length >= 3 ? enableEnterButton() : disableEnterButton()
 }
@@ -413,8 +440,6 @@ function returnLetter() {
 function addLetter(letter) {
 	currTileBbox = document.getElementById(currTile.toString()).getBoundingClientRect();
 	destTileBbox = document.getElementById(guess.length.toString() + "top").getBoundingClientRect();
-
-	console.log(destTileBbox)
 
 	const tile = document.getElementById(currTile.toString())
 
@@ -524,6 +549,7 @@ function shuffleLetters() {
 		currTile = r
 		returnLetter()
 	}
+	guess = ""
 }
 
 
