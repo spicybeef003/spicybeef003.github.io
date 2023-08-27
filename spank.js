@@ -1,4 +1,4 @@
-import data from '' assert { type: 'json' };
+import data from 'trimmedEnDictionary.json' assert { type: 'json' };
 console.log(data);
 
 var numTiles = 6; // number tiles in game
