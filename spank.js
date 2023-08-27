@@ -86,7 +86,8 @@ function checkScreenSize() {
 	document.querySelector(':root').style.setProperty("--tile-width", tileWidth + "px");
 	document.querySelector(':root').style.setProperty("--tile-margin", tileMargin + "px");
 
-	document.getElementsByClassName("modal")[0].style.maxHeight = window.innerHeight*0.9+"px"
+	document.getElementsByClassName("modal")[0].style.maxHeight = window.innerHeight*0.93+"px"
+	document.getElementsByClassName("modal")[0].style.minWidth = window.innerWidth*0.97+"px"
 	document.getElementsByClassName("allTileHolders")[0].style.height = tileWidth*2.5 + "px"
 
 	if (window.innerHeight > window.innerWidth) {
@@ -561,7 +562,7 @@ function startTimer() {
 function showShareModal() {
 	document.getElementById("shareModal").style.display = "block"
 
-	if (!gameOver) {
+	if (gameOver) {
 		let sortedAcceptedWords = acceptedWords.sort(function(a, b) {
 			  return a.length - b.length || a.localeCompare(b);
 			})
