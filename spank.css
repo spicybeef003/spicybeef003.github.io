@@ -319,10 +319,10 @@ div {
 
 #welcomeBottom {
 	height: 40%;
-	justify-content: center;
+	justify-content: space-around;
   align-items: center;
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 }
 
 #startButton {
