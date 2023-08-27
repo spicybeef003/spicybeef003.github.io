@@ -163,8 +163,8 @@ function loadTopButtons() {
 					)
 				];
 				navigator.share({
+					text: "Spank this"
 					files: filesArray,
-					url: newUrl
 				})
 			}))
 		} else {
@@ -181,15 +181,25 @@ function loadTopButtons() {
 		const newUrl = new URL(baseURL + letterIntArray + "&gameID=" + gameID)
 
 		if (navigator.share) {
-			navigator.share({
-				text: "Can you spank harder?",
-				url: newUrl
-			});
+			html2canvas(document.querySelector("#scoreBox")).then(canvas => canvas.toBlob(blob => {
+				const filesArray = [
+					new File(
+						[blob], 
+						'image.png', 
+						{ 
+							type: blob.type,
+							lastModified: new Date().getTime() 
+						}
+					)
+				];
+				navigator.share({
+					files: filesArray,
+					url: newUrl
+				})
 		} else {
 			navigator.clipboard.writeText(newUrl);
 			customAlert("Link copied to clipboard");
 		}
-		
 	})
 
 	// help button
