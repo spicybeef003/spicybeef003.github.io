@@ -164,7 +164,6 @@ function loadTopButtons() {
 				];
 				navigator.share({
 					files: filesArray,
-					text: "blah",
 					url: newUrl
 				})
 			}))
