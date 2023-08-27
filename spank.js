@@ -76,17 +76,17 @@ function loadWelcome() {
 function checkScreenSize() {
 	console.log(window.innerWidth)
 	console.log(window.innerHeight)
-	let tileWidth = (window.innerWidth*0.9-4*6)/7 // need to account for border
-	let tileMargin = (window.innerWidth*0.9-4*6)/7/12
-	document.querySelector(':root').style.setProperty("--tile-width", tileWidth + "px");
-	document.querySelector(':root').style.setProperty("--tile-margin", tileMargin + "px");
-
+	
 	if (window.innerHeight > window.innerWidth) {
 		if (window.innerWidth < 500) {
 			document.getElementsByClassName("widthControl")[0].style.minWidth = window.innerWidth*0.95+"px"
 			document.getElementById("topTileHolders").style.minWidth = window.innerWidth*0.9+"px"
 			document.getElementById("bottomTileHolders").style.minWidth = window.innerWidth*0.9+"px"
 			document.getElementById("letters").style.minWidth = window.innerWidth*0.9+"px"
+			let tileWidth = (window.innerWidth*0.9-4*6)/7 // need to account for border
+			let tileMargin = (window.innerWidth*0.9-4*6)/7/12
+			document.querySelector(':root').style.setProperty("--tile-width", tileWidth + "px");
+			document.querySelector(':root').style.setProperty("--tile-margin", tileMargin + "px");
 		} 
 
 		if (window.innerHeight < 600) {
@@ -117,8 +117,8 @@ function checkScreenSize() {
 	}
 
 	if (window.innerHeight < 900) {
-		document.getElementById("general").style.height = "100px"
-		document.getElementById("general").style.width = "75px"
+		document.getElementById("general").style.height = "150px"
+		document.getElementById("general").style.width = "112.5px"
 	}
 }
 
