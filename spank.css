@@ -136,9 +136,10 @@ div {
 	align-items: center;
 	display: flex;
 	flex-direction: column;
-	height: 20%;
-	max-height: 200px;
-	justify-content: flex-start;
+	height: 30%;
+	margin: 0 auto;
+	max-height: 300px;
+	justify-content: space-around;
 }
 
 #topTileHolders, #bottomTileHolders {

@@ -44,6 +44,7 @@ function initialize() {
 	setupTiles()
 	setupKeyPresses()
 	disableEnterButton()
+	
 
 	console.log(window.location.href)
 
@@ -76,20 +77,25 @@ function loadWelcome() {
 function checkScreenSize() {
 	console.log(window.innerWidth)
 	console.log(window.innerHeight)
-	
+	console.log((window.innerWidth*0.9-4*6)/7 )
+	let tileWidth = (window.innerWidth*0.9-4*6)/7 > 80 ? 80 : (window.innerWidth*0.9-4*6)/7 // need to account for border
+	let tileMargin = (window.innerWidth*0.9-4*6)/7/12 > 10 ? 10 : (window.innerWidth*0.9-4*6)/7/12
+	document.querySelector(':root').style.setProperty("--tile-width", tileWidth + "px");
+	document.querySelector(':root').style.setProperty("--tile-margin", tileMargin + "px");
+
+	document.getElementsByClassName("widthControl")[0].style.maxHeight = window.innerHeight*0.9+"px"
+	document.getElementsByClassName("allTileHolders")[0].style.height = tileWidth*2.5 + "px"
+
 	if (window.innerHeight > window.innerWidth) {
 		if (window.innerWidth < 500) {
 			document.getElementsByClassName("widthControl")[0].style.minWidth = window.innerWidth*0.95+"px"
 			document.getElementById("topTileHolders").style.minWidth = window.innerWidth*0.9+"px"
 			document.getElementById("bottomTileHolders").style.minWidth = window.innerWidth*0.9+"px"
 			document.getElementById("letters").style.minWidth = window.innerWidth*0.9+"px"
-			let tileWidth = (window.innerWidth*0.9-4*6)/7 // need to account for border
-			let tileMargin = (window.innerWidth*0.9-4*6)/7/12
-			document.querySelector(':root').style.setProperty("--tile-width", tileWidth + "px");
-			document.querySelector(':root').style.setProperty("--tile-margin", tileMargin + "px");
+			
 		} 
 
-		if (window.innerHeight < 600) {
+		if (window.innerHeight < 700) {
 			document.getElementsByClassName("widthControl")[0].style.maxHeight = window.innerHeight+"px"
 			document.getElementById("topTileHolders").style.maxHeight = window.innerHeight+"px"
 			document.getElementById("bottomTileHolders").style.maxHeight = window.innerHeight+"px"
@@ -114,12 +120,16 @@ function checkScreenSize() {
 		document.querySelector(':root').style.setProperty("--tile-width", tileWidth + "px");
 		let tileMargin = (window.innerWidth-4*6)/84 < 2.5 ? (window.innerWidth-4*6)/84 : 2.5
 		document.querySelector(':root').style.setProperty("--tile-margin", tileMargin + "px");
+
+		document.getElementsByClassName("allTileHolders")[0].style.height = tileWidth*2.5 + "px"
 	}
 
 	if (window.innerHeight < 900) {
 		document.getElementById("general").style.height = "150px"
 		document.getElementById("general").style.width = "112.5px"
 	}
+
+	
 }
 
 function loadTopButtons() {
@@ -136,15 +146,22 @@ function loadTopButtons() {
 	document.getElementById("shareResultButton").addEventListener("click", async () => {
 
 		if (navigator.share) {
-			try {
-				html2canvas(document.querySelector("#scoreBox")).then(canvas => canvas.toBlob(blob => {
-					const filesArray = [new File([blob], 'image.png', { type: "image/png", lastModified: new Date().getTime() })];
-					navigator.share(filesArray);
-				}))
-			} catch (err) {
-				customAlert(`Error: ${err}`);
-				console.log(err);
-			}
+			html2canvas(document.querySelector("#scoreBox")).then(canvas => canvas.toBlob(blob => {
+				const filesArray = [
+					new File(
+						[blob], 
+						'image.jpg', 
+						{ 
+							type: "image/jpg",
+							lastModified: new Date().getTime() 
+						}
+					)
+				];
+				navigator.share({
+					files: filesArray,
+					text: "blah"
+				})
+			}))
 		} else {
 			html2canvas(document.querySelector("#scoreBox")).then(canvas => canvas.toBlob(blob => navigator.clipboard.write([new ClipboardItem({
 				'image/png': blob
@@ -160,11 +177,12 @@ function loadTopButtons() {
 
 		if (navigator.share) {
 			navigator.share({
+				text: "Can you spank harder?",
 				url: newUrl
 			});
 		} else {
 			navigator.clipboard.writeText(newUrl);
-			customAlert("Copied");
+			customAlert("Link copied to clipboard");
 		}
 		
 	})
