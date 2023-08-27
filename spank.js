@@ -83,7 +83,7 @@ function checkScreenSize() {
 	document.querySelector(':root').style.setProperty("--tile-width", tileWidth + "px");
 	document.querySelector(':root').style.setProperty("--tile-margin", tileMargin + "px");
 
-	document.getElementsByClassName("widthControl")[0].style.maxHeight = window.innerHeight*0.9+"px"
+	//document.getElementsByClassName("widthControl")[0].style.maxHeight = window.innerHeight*0.9+"px"
 	document.getElementsByClassName("allTileHolders")[0].style.height = tileWidth*2.5 + "px"
 
 	if (window.innerHeight > window.innerWidth) {
@@ -102,6 +102,8 @@ function checkScreenSize() {
 			document.getElementById("letters").style.maxHeight = window.innerHeight+"px"
 		} 
 	}
+
+	//compare to tileheightholder
 
 	if (window.innerWidth > window.innerHeight) {
 		if (window.innerWidth < 500) {
@@ -146,20 +148,24 @@ function loadTopButtons() {
 	document.getElementById("shareResultButton").addEventListener("click", async () => {
 
 		if (navigator.share) {
+			let letterIntArray = originalLetters.split('').map((char) => { return char.charCodeAt(0) })
+			const newUrl = new URL(baseURL + letterIntArray + "&gameID=" + gameID)
+
 			html2canvas(document.querySelector("#scoreBox")).then(canvas => canvas.toBlob(blob => {
 				const filesArray = [
 					new File(
 						[blob], 
-						'image.jpg', 
+						'image.png', 
 						{ 
-							type: "image/jpg",
+							type: blob.type,
 							lastModified: new Date().getTime() 
 						}
 					)
 				];
 				navigator.share({
 					files: filesArray,
-					text: "blah"
+					text: "blah",
+					url: newUrl
 				})
 			}))
 		} else {
