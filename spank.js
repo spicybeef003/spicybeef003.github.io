@@ -1,6 +1,3 @@
-import data from './trimmedEnDictionary.json' assert { type: 'json' };
-console.log(data);
-
 var numTiles = 6; // number tiles in game
 var currTile = 0; // current letter
 
