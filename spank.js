@@ -1,3 +1,8 @@
+var script = document.createElement('script');
+script.src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js';
+script.type = 'text/javascript';
+document.getElementsByTagName('head')[0].appendChild(script);
+
 var numTiles = 6; // number tiles in game
 var currTile = 0; // current letter
 
@@ -15,13 +20,14 @@ var correctlyGuessedWords = []
 var score = 0
 var timeLeft = 60
 var gameOver = false
+var dictJSON = []
+var dictWords = []
 
 var baseURL = "https://spicybeef003.github.io/?starter="
 
-
-
 window.onload = function() {
 	document.getElementsByClassName("loader-container")[0].style.display = "none"
+
 	initialize();
 }
 
@@ -37,14 +43,11 @@ window.onclick = function(event) {
 
 
 function initialize() {
-	loadWelcome()
 	checkScreenSize();
 	loadTopButtons()
-	pickLetters()
-	setupTiles()
+	getDefinitions()
 	setupKeyPresses()
 	disableEnterButton()
-	
 
 	console.log(window.location.href)
 
@@ -83,7 +86,7 @@ function checkScreenSize() {
 	document.querySelector(':root').style.setProperty("--tile-width", tileWidth + "px");
 	document.querySelector(':root').style.setProperty("--tile-margin", tileMargin + "px");
 
-	//document.getElementsByClassName("widthControl")[0].style.maxHeight = window.innerHeight*0.9+"px"
+	document.getElementsByClassName("modal")[0].style.maxHeight = window.innerHeight*0.9+"px"
 	document.getElementsByClassName("allTileHolders")[0].style.height = tileWidth*2.5 + "px"
 
 	if (window.innerHeight > window.innerWidth) {
@@ -163,7 +166,7 @@ function loadTopButtons() {
 					)
 				];
 				navigator.share({
-					text: "Spank this"
+					text: "Spank this",
 					files: filesArray,
 				})
 			}))
@@ -196,6 +199,7 @@ function loadTopButtons() {
 					files: filesArray,
 					url: newUrl
 				})
+			}))
 		} else {
 			navigator.clipboard.writeText(newUrl);
 			customAlert("Link copied to clipboard");
@@ -249,9 +253,10 @@ function pickLetters() {
 
 			if (result.length == numTiles) {
 				let permuts = tree(result.split('')).map(function(str) { return str.join('') })
-				acceptedWords = permuts.filter(value => wordList.includes(value));
+				acceptedWords = permuts.filter(value => (wordList.includes(value) && isWord(value)));
+
 				let totalPts = acceptedWords.map(function(n) { return getPointsValue(n.length)}).reduce((a,b) => a + b, 0)
-				if (acceptedWords.length >= 20 && totalPts > 4000) {
+				if (acceptedWords.length >= 15 && totalPts > 5000) {
 					acceptable = true
 					console.log(acceptedWords)
 					console.log(totalPts)
@@ -267,6 +272,17 @@ function pickLetters() {
 	}
 	document.getElementById("gameID").innerText = "GameID: " + gameID
 }
+
+function getDefinitions() {
+	$.getJSON("https://raw.githubusercontent.com/spicybeef003/spicybeef003.github.io/main/trimmedEnDictionary.json", function(data) {
+		dictJSON = data;
+		dictWords = data.map(function(n) { return n["word"] });
+		loadWelcome()
+		pickLetters()
+		setupTiles()
+	})
+}
+
 
 function setupTiles() {
 	// create top row of tile holders
@@ -545,19 +561,50 @@ function startTimer() {
 function showShareModal() {
 	document.getElementById("shareModal").style.display = "block"
 
-	if (gameOver) {
+	if (!gameOver) {
 		let sortedAcceptedWords = acceptedWords.sort(function(a, b) {
 			  return a.length - b.length || a.localeCompare(b);
 			})
 		for (i = 0; i < sortedAcceptedWords.length; i++) {
 			let word = sortedAcceptedWords[i];
-			let h5 = document.createElement("h5");
+			let h5 = document.createElement("button");
+			h5.style.background = "none";
+			h5.style.border = "none";
+			h5.style.color = "blue";
+			h5.style.marginTop = "1px";
+			h5.style.marginBottom = "1px";
 			h5.innerText = word;
 			h5.id = word;
+			h5.addEventListener("click", function(e) {
+				// get definition
+				let thisWord = e.currentTarget.innerText;
+				let idx = dictWords.indexOf(thisWord);
+				var pos 
+				var defs
+				if (idx >= 0) {
+					pos = "pos" in dictJSON[idx] ? dictJSON[idx].pos : "N/A"
+					defs = "definitions" in dictJSON[idx] ? dictJSON[idx].definitions.map(function(n) { return(n) }).join("\n\n") : "N/A"
+				}
+				else {
+					pos = "N/A"
+					defs = "N/A"
+				}
+
+				document.getElementById("word").innerText = word;
+				document.getElementById("pos").innerText = "Part of speech: " + pos;
+				document.getElementById("defs").innerText = "Definition(s):\n\n" + defs;
+				document.getElementById("definitions").style.overflowY = "scroll";
+			})
 			document.getElementById("wordCombos").appendChild(h5)
+
 		}
 		document.getElementById("wordCombos").style.overflowY = "scroll"
 	}
+}
+
+function isWord(word) {
+	let idx = dictWords.indexOf(word);
+	return (idx >= 0 ? true : false)
 }
 
 String.prototype.shuffle = function () {
