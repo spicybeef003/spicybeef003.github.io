@@ -18,7 +18,7 @@ var statement = document.querySelector("h1#statement")
 var acceptedWords = []
 var correctlyGuessedWords = []
 var score = 0
-var timeLeft = 60
+var timeLeft = 1
 var gameOver = false
 var dictJSON = []
 var dictWords = []
@@ -606,28 +606,33 @@ function showShareModal() {
 			h5.addEventListener("click", function(e) {
 				// get definition
 				let thisWord = e.currentTarget.innerText;
-				let idx = dictWords.indexOf(thisWord);
-				var pos 
-				var defs
-				if (idx >= 0) {
-					pos = "pos" in dictJSON[idx] ? dictJSON[idx].pos : "N/A"
-					defs = "definitions" in dictJSON[idx] ? dictJSON[idx].definitions.map(function(n) { return(n) }).join("\n\n") : "N/A"
-				}
-				else {
-					pos = "N/A"
-					defs = "N/A"
-				}
-
-				document.getElementById("word").innerText = word;
-				document.getElementById("pos").innerText = "Part of speech: " + pos;
-				document.getElementById("defs").innerText = "Definition(s):\n\n" + defs;
-				document.getElementById("definitions").style.overflowY = "scroll";
+				showDefinition(thisWord)
 			})
 			document.getElementById("wordCombos").appendChild(h5)
 
 		}
+		showDefinition(sortedAcceptedWords[0])
+		document.getElementById("definitions").style.overflowY = "scroll";
 		document.getElementById("wordCombos").style.overflowY = "scroll"
 	}
+}
+
+function showDefinition(word) {
+	let idx = dictWords.indexOf(word);
+	var pos 
+	var defs
+	if (idx >= 0) {
+		pos = "pos" in dictJSON[idx] ? dictJSON[idx].pos : "N/A"
+		defs = "definitions" in dictJSON[idx] ? dictJSON[idx].definitions.map(function(n) { return(n) }).join("\n\n") : "N/A"
+	}
+	else {
+		pos = "N/A"
+		defs = "N/A"
+	}
+
+	document.getElementById("word").innerText = word;
+	document.getElementById("pos").innerText = "Part of speech: " + pos;
+	document.getElementById("defs").innerText = "Definition(s):\n\n" + defs;
 }
 
 function isWord(word) {
