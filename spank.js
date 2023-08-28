@@ -18,7 +18,7 @@ var statement = document.querySelector("h1#statement")
 var acceptedWords = []
 var correctlyGuessedWords = []
 var score = 0
-var timeLeft = 1
+var timeLeft = 60
 var gameOver = false
 var dictJSON = []
 var dictWords = []
@@ -79,9 +79,6 @@ function loadWelcome() {
 }
 
 function checkScreenSize() {
-	console.log(window.innerWidth)
-	console.log(window.innerHeight)
-	console.log((window.innerWidth*0.9-4*6)/7 )
 	let tileWidth = (window.innerWidth*0.9-4*6)/7 > 80 ? 80 : (window.innerWidth*0.9-4*6)/7 // need to account for border
 	let tileMargin = (window.innerWidth*0.9-4*6)/7/12 > 10 ? 10 : (window.innerWidth*0.9-4*6)/7/12
 	document.querySelector(':root').style.setProperty("--tile-width", tileWidth + "px");
@@ -282,6 +279,7 @@ function getDefinitions() {
 		loadWelcome()
 		pickLetters()
 	})
+
 }
 
 
