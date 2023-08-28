@@ -255,7 +255,7 @@ function pickLetters() {
 
 			if (result.length == numTiles) {
 				let permuts = tree(result.split('')).map(function(str) { return str.join('') })
-				acceptedWords = permuts.filter(value => (wordList.includes(value) && isWord(value)));
+				acceptedWords = permuts.filter(word => (wordList.includes(word) && isWord(word)));
 
 				let totalPts = acceptedWords.map(function(n) { return getPointsValue(n.length)}).reduce((a,b) => a + b, 0)
 				if (acceptedWords.length >= 15 && totalPts > 5000) {
@@ -598,7 +598,7 @@ function showShareModal() {
 			let h5 = document.createElement("button");
 			h5.style.background = "none";
 			h5.style.border = "none";
-			h5.style.color = "blue";
+			h5.style.color =  correctlyGuessedWords.includes(word) ? "red" : "blue";
 			h5.style.marginTop = "1px";
 			h5.style.marginBottom = "1px";
 			h5.innerText = word;
@@ -632,7 +632,10 @@ function showShareModal() {
 
 function isWord(word) {
 	let idx = dictWords.indexOf(word);
-	return (idx >= 0 ? true : false)
+	if (idx < 0) {
+		return false
+	}
+	return ("definitions" in dictJSON[idx] ? true : false)
 }
 
 String.prototype.shuffle = function () {
