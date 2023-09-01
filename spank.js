@@ -103,6 +103,10 @@ function checkScreenSize() {
 			document.getElementById("bottomTileHolders").style.maxHeight = window.innerHeight+"px"
 			document.getElementById("letters").style.maxHeight = window.innerHeight+"px"
 		} 
+
+		if (window.innerHeight < 700) {
+			document.getElementsByClassName("widthControl")[0].style.minHeight = window.innerHeight+"px"
+		} 
 	}
 
 	//compare to tileheightholder
